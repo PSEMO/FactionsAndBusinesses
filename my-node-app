@@ -1,0 +1,115 @@
+cd /;sudo rm -rf /home/website/*;sudo rm -rf /home/psemo/*;
+
+----------------------------------------
+
+scp -r C:\Users\semih\Desktop\WebPage\FactionsBusinesses psemo@192.168.1.106:/home/psemo/
+scp -r psemo@192.168.1.106:/home/website/FactionsBusinesses C:\Users\semih\Desktop\WebPage\FactionsBusinesses 
+
+----------------------------------------
+
+sudo cp -r /home/psemo/FactionsBusinesses /home/website/;
+
+sudo chown -R psemo:psemo /home/website/FactionsBusinesses;
+sudo chmod -R u+rwx /home/website/FactionsBusinesses;
+
+sudo chmod o+x /home;
+sudo chmod o+x /home/website;
+sudo chmod o+x /home/website/FactionsBusinesses;
+sudo chmod o+x /home/website/FactionsBusinesses/public;
+sudo chmod o+x /home/website/FactionsBusinesses/views;
+sudo chmod o+x /home/website/FactionsBusinesses/views/partials;
+
+sudo chown -R psemo:www-data /home/website/FactionsBusinesses/public;
+sudo find /home/website/FactionsBusinesses/public -type d -exec chmod 755 {} \;
+sudo find /home/website/FactionsBusinesses/public -type f -exec chmod 644 {} \;
+
+sudo chown -R psemo:www-data /home/website/FactionsBusinesses/views;
+sudo find /home/website/FactionsBusinesses/views -type d -exec chmod 755 {} \;
+sudo find /home/website/FactionsBusinesses/views -type f -exec chmod 644 {} \;
+
+sudo chown -R psemo:www-data /home/website/FactionsBusinesses/views/partials;
+sudo find /home/website/FactionsBusinesses/views/partials -type d -exec chmod 755 {} \;
+sudo find /home/website/FactionsBusinesses/views/partials -type f -exec chmod 644 {} \;
+
+sudo systemctl reload nginx;
+
+---
+
+screen -S nodeapp;
+cd /home/website/FactionsBusinesses/;
+node .;
+
+Now 'Ctrl + A' then 'D'
+
+-------------to re-attach:--------------
+
+screen -r nodeapp
+
+----------------------------------------
+
+sudo nano /etc/nginx/sites-available/my-node-app;
+
+----------------------------------------
+
+# Define the upstream server (your Node.js app)
+upstream nodejs_backend {
+    server 127.0.0.1:8080;
+    keepalive 64;
+}
+
+# Define the public-facing server block
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name _; # Replace with your domain or IP if needed
+
+    # Define the root directory for static files
+    root /home/website/FactionsBusinesses;
+
+    # Location block for serving static assets (CSS, JS, Images, Fonts etc.)
+    # Try to serve the file directly, otherwise pass to Node.js (via @nodejs)
+    location ~ \.(css|js|ico|gif|jpg|jpeg|png|svg|woff|woff2|ttf|eot)$ {
+        try_files $uri =404; # Serve the file if it exists, else 404
+        expires 1d;          # Cache static files for 1 day in browser
+        add_header Cache-Control "public";
+    }
+
+    # Define what happens for requests matching the root path '/'
+    # and any other paths not matched above (e.g., API endpoints, HTML pages serv>
+    location / {
+        # If serving index.html directly via Nginx AND Node handles API/dynamic r>
+        # try_files $uri $uri/ @nodejs;
+
+        # --- OR --- (More likely based on your setup)
+        # If Node.js serves ALL non-static content (including index.html)
+        proxy_pass http://nodejs_backend;
+
+        # Headers to pass important information to Node
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # WebSocket support (keep this)
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    # Optional: Define the named location for Node.js fallback if using try_files>
+    # location @nodejs {
+    #     proxy_pass http://nodejs_backend;
+    #     proxy_set_header Host $host;
+    #     proxy_set_header X-Real-IP $remote_addr;
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header Upgrade $http_upgrade;
+    #     proxy_set_header Connection "upgrade";
+    # }
+
+    # Configure logging
+    access_log /var/log/nginx/my-node-app.access.log;
+    error_log /var/log/nginx/my-node-app.error.log;
+}

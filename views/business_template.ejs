@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head', { pageTitle: pageTitle || `${business.name} - Business` }) %>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <%- include('partials/navbar', { siteTitle: 'Site Home' , currentPageType: 'Business' , currentItemName:
+        business.name }) %>
+
+        <%- include('partials/theme-toggle') %>
+
+            <!-- Main Content Area -->
+            <main class="container mt-4 mb-5 flex-grow-1">
+
+                <h1 class="mb-3">
+                    <%= business.name %> <span class="badge bg-success align-middle fs-6 fw-normal">Business</span>
+                </h1>
+
+                <!-- About Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">About <%= business.name %>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (business.description) { %>
+                            <p class="card-text mb-4"><%- business.description %></p>
+                            <hr>
+                            <% } %>
+                                <dl class="row mb-0">
+                                    <dt class="col-sm-3">Owner:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= business.owner || 'N/A' %>
+                                    </dd>
+                                    <dt class="col-sm-3">Employees:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= business.employees !=null ? business.employees : 'N/A' %>
+                                    </dd>
+                                    <dt class="col-sm-3">Specialty:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= business.specialty || 'General Operations' %>
+                                    </dd>
+                                    <%# Add other business-specific fields if needed %>
+                                </dl>
+                    </div>
+                </div>
+
+                <!-- News Section Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Recent News & Updates</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (business.news && business.news.length> 0) { %>
+                            <% business.news.forEach(item=> { %>
+                                <div class="news-item">
+                                    <span class="news-date">[<%= item.date %>]</span>
+                                    <span class="news-content">
+                                        <%= item.content %>
+                                    </span>
+                                </div>
+                                <% }); %>
+                                    <% } else { %>
+                                        <p class="text-muted mb-0">No recent news available.</p>
+                                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <%- include('partials/back-button', { href: '/main' , text: 'Back to Home' ,
+                    tooltipText: 'Return to the main page' }) %>
+
+            </main> <!-- End Main Content -->
+
+            <%- include('partials/footer') %>
+                <%- include('partials/scripts') %>
+
+</body>
+
+</html>

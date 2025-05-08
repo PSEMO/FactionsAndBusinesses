@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head', { pageTitle: pageTitle || '404 - Not Found' }) %>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <%- include('partials/navbar', { siteTitle: 'Site Home' }) %>
+        <%# Simple navbar for 404 %>
+
+            <%- include('partials/theme-toggle') %>
+
+                <!-- Main Content Area -->
+                <main class="container mt-5 mb-5 flex-grow-1 error-page-container">
+                    <%# Added class %>
+
+                        <h1 class="display-4">404 - Not Found</h1>
+                        <p class="lead text-muted">
+                            <%= message %>
+                        </p>
+
+                        <%- include('partials/back-button', { href: '/main' , text: 'Back to Home' }) %>
+
+                </main> <!-- End Main Content -->
+
+                <%- include('partials/footer') %>
+                    <%- include('partials/scripts') %>
+
+</body>
+
+</html>

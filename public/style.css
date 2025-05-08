@@ -1,0 +1,171 @@
+/* public/css/style.css */
+
+/* Apply custom font & Basic Body Setup */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background-color: var(--bs-body-bg); /* Let Bootstrap handle theme */
+    transition: background-color 0.3s ease;
+    /* Smooth theme transition */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Ensure body takes full viewport height */
+}
+
+/* Main content area */
+main {
+    flex-grow: 1;
+    /* Allows main content to push footer down */
+}
+
+/* ---- Navbar ---- */
+.navbar {
+    background-color: #000 !important;
+}
+
+/* ---- Theme Toggle Button ---- */
+#theme-toggle-float {
+    position: fixed;
+    bottom: 20px;
+    /* Position bottom right */
+    right: 20px;
+    z-index: 1050;
+    border-radius: 50%;
+    /* Make it circular */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Add subtle shadow */
+}
+
+/* ---- List Group Styling (main.ejs) ---- */
+.list-group-item-action {
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    border-left: 4px solid transparent;
+    /* Add space for hover effect */
+    margin-bottom: 5px;
+    /* Add space between items */
+    border-radius: 0.375rem;
+    /* Slightly rounded corners */
+}
+
+.list-group-item-action:hover,
+.list-group-item-action:focus {
+    background-color: var(--bs-primary-bg-subtle);
+    /* Primary subtle background on hover */
+    border-left-color: var(--bs-primary);
+    /* Highlight border on hover */
+    transform: translateX(3px);
+    /* Slight shift on hover */
+    z-index: 1;
+    /* Ensure hover is on top */
+    position: relative;
+    /* Needed for z-index */
+}
+
+/* ---- Card Styling (main.ejs columns, faction/business details) ---- */
+.column-card {
+    /* Specific card style for main page columns */
+    background-color: var(--bs-tertiary-bg);
+    /* Subtle background */
+    border: 1px solid var(--bs-border-color-translucent);
+    /* Subtle border */
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    /* Space below cards */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+.card {
+    /* General card enhancements */
+    border: 1px solid var(--bs-border-color-translucent);
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    /* Optional: Keep if needed */
+    margin-bottom: 1.5rem;
+    /* Consistent spacing */
+}
+
+.card-header h5 {
+    margin-bottom: 0;
+    /* Remove default margin for header text */
+}
+
+/* ---- News Item Styling (faction/business pages) ---- */
+.news-item:not(:last-child) {
+    /* Add separator between news items */
+    border-bottom: 1px dashed var(--bs-border-color-translucent);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.news-date {
+    font-weight: 600;
+    color: var(--bs-secondary-color);
+    margin-right: 0.5em;
+    font-size: 0.9em;
+    /* Slightly smaller */
+    display: inline-block;
+    /* Keep on same line if space allows */
+    margin-bottom: 0.3rem;
+}
+
+.news-content {
+    /* Style for the news text itself if needed */
+}
+
+
+/* ---- Footer Styling ---- */
+footer.footer {
+    background-color: #000 !important;
+    /* Use Bootstrap variable */
+    color: var(--bs-secondary-color);
+    /* Use Bootstrap variable */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid var(--bs-border-color-translucent);
+    font-size: 0.9em;
+    text-align: center;
+    /* mt-auto class handles positioning in flexbox */
+}
+
+footer.footer a {
+    color: var(--bs-primary);
+    /* Link color based on theme */
+    text-decoration: none;
+}
+
+footer.footer a:hover {
+    color: var(--bs-link-hover-color);
+    text-decoration: underline;
+}
+
+footer .footer-license-address-text {
+    color: #AEB2B6 !important;
+}
+
+footer .disclaimer-text {
+    /* Style for disclaimer */
+    font-size: 0.85em;
+    color: #7F8387 !important;
+    margin-top: 1rem;
+}
+
+/* ---- 404 Page Specific Styles ---- */
+.error-page-container {
+    text-align: center;
+    margin-top: 5rem;
+    /* Adjust as needed */
+}
+
+.btn-back {
+    margin-top: 1.5rem;
+}
+
+/* ---- Utility ---- */
+/* Add any other shared utility styles if needed */

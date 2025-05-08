@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head', { pageTitle: pageTitle || `${faction.name} - Faction` }) %>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <%- include('partials/navbar', { siteTitle: 'Site Home' , currentPageType: 'Faction' , currentItemName: faction.name
+        }) %>
+
+        <%- include('partials/theme-toggle') %>
+
+            <!-- Main Content Area -->
+            <main class="container mt-4 mb-5 flex-grow-1">
+
+                <h1 class="mb-3">
+                    <%= faction.name %> <span class="badge bg-info align-middle fs-6 fw-normal">Faction</span>
+                </h1>
+
+                <!-- About Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">About <%= faction.name %>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (faction.description) { %>
+                            <p class="card-text mb-4"><%- faction.description %></p>
+                            <hr>
+                            <% } %>
+                                <dl class="row mb-0">
+                                    <dt class="col-sm-3">Leader:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= faction.leader || 'N/A' %>
+                                    </dd>
+                                    <dt class="col-sm-3">Members:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= faction.members !=null ? faction.members : 'N/A' %>
+                                    </dd>
+                                    <dt class="col-sm-3">Focus:</dt>
+                                    <dd class="col-sm-9">
+                                        <%= faction.focus || 'General Activities' %>
+                                    </dd>
+                                    <% if (faction.perks && faction.perks.length> 0) { %>
+                                        <dt class="col-sm-3 pt-2">Perks:</dt>
+                                        <dd class="col-sm-9 pt-2">
+                                            <ul class="list-unstyled mb-0">
+                                                <% faction.perks.forEach(perk=> { %>
+                                                    <li>
+                                                        <span class="badge bg-success me-1" data-bs-toggle="tooltip"
+                                                            title="Faction Perk">+</span>
+                                                        <%= perk %>
+                                                    </li>
+                                                    <% }); %>
+                                            </ul>
+                                        </dd>
+                                        <% } %>
+                                </dl>
+                    </div>
+                </div>
+
+                <!-- News Section Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Recent News & Updates</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (faction.news && faction.news.length> 0) { %>
+                            <% faction.news.forEach(item=> { %>
+                                <div class="news-item">
+                                    <span class="news-date">[<%= item.date %>]</span>
+                                    <span class="news-content">
+                                        <%= item.content %>
+                                    </span>
+                                </div>
+                                <% }); %>
+                                    <% } else { %>
+                                        <p class="text-muted mb-0">No recent news available.</p>
+                                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <%- include('partials/back-button', { href: '/main' , text: 'Back to Home' ,
+                    tooltipText: 'Return to the main page' }) %>
+
+            </main> <!-- End Main Content -->
+
+            <%- include('partials/footer') %>
+                <%- include('partials/scripts') %>
+
+</body>
+
+</html>

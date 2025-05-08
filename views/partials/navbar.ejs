@@ -1,0 +1,33 @@
+<%# views/partials/navbar.ejs %>
+    <%# Expects: siteTitle (String), [currentItemName (String)], [currentPageType (String)] %>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="/main">
+                    <%= siteTitle || 'Factions & Businesses' %>
+                        <%# Provide a default title %>
+                </a>
+
+                <%# Conditionally display "Viewing..." text %>
+                    <% if (typeof currentItemName !=='undefined' && currentItemName) { %>
+                        <span class="navbar-text text-white-50 ms-auto">
+                            <%# ms-auto pushes it right %>
+                                Viewing <%= currentPageType || 'Item' %>: <%= currentItemName %>
+                        </span>
+                        <% } %>
+
+                            <%# Add other navbar items here if needed (e.g., links, dropdowns) %>
+                                <%# <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                    </button>
+                                    <div class="collapse navbar-collapse" id="navbarNav">
+                                        <ul class="navbar-nav ms-auto">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="/main">Home</a>
+                                            </li>
+                                            Add more links
+                                        </ul>
+                                    </div> %>
+            </div>
+        </nav>

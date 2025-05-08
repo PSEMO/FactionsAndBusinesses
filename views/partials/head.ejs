@@ -1,0 +1,26 @@
+<%# views/partials/head.ejs %>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <%= typeof pageTitle !=='undefined' ? pageTitle : 'Torn World Info' %>
+    </title>
+
+    <!-- Bootstrap CSS -->
+    <link href="/public/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts (Optional) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/public/style.css">
+
+    <!-- Script to apply saved theme *immediately* -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem('theme') || 'light'; // Default to light
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            console.log(`[Pre-load] Applied theme: ${theme}`); // Debug log
+        })();
+    </script>

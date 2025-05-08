@@ -1,0 +1,11 @@
+<%# views/partials/back-button.ejs %>
+    <%# Expects: href (String), text (String), [tooltipText (String)] %>
+        <div class="text-center mt-4">
+            <a href="<%= href %>" class="btn btn-outline-secondary btn-back" <% if (typeof tooltipText !=='undefined' )
+                { %>
+                data-bs-toggle="tooltip" data-bs-placement="top" title="<%= tooltipText %>"
+                    <% } %>>
+                        <%# Optional: Add Bootstrap Icon <i class="bi bi-arrow-left"></i> %>
+                            <%= text %>
+            </a>
+        </div>

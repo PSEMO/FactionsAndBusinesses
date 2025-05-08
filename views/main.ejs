@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<%# Removed data-bs-theme, handled by script in head.ejs %>
+
+    <head>
+        <%- include('partials/head', { pageTitle: title }) %>
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <%- include('partials/navbar', { siteTitle: title, currentPageType: 'main' }) %>
+
+            <%- include('partials/theme-toggle') %>
+
+                <!-- Main Content Area -->
+                <main class="container mt-4 mb-5 flex-grow-1">
+
+                    <!-- Page Introduction -->
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bold">
+                            <%= title %>
+                        </h1>
+                        <p class="lead text-muted">
+                            Explore the various Factions and Businesses operating within this world.
+                        </p>
+                        <hr class="w-50 mx-auto">
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Factions Column -->
+                        <div class="col-lg-6">
+                            <div class="column-card h-100">
+                                <h2 class="text-center mb-4">Factions</h2>
+                                <% if (Object.keys(factions).length> 0) { %>
+                                    <div class="list-group">
+                                        <% Object.values(factions).forEach(faction=> { %>
+                                            <a href="/faction/<%= faction.slug %>"
+                                                class="list-group-item list-group-item-action" data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                title="Click to view details for <%= faction.name %>">
+                                                <span class="fw-medium">
+                                                    <%= faction.name %>
+                                                </span>
+                                            </a>
+                                            <% }); %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="alert alert-secondary text-center" role="alert">
+                                            No factions listed yet.
+                                        </div>
+                                        <% } %>
+                            </div>
+                        </div>
+
+                        <!-- Businesses Column -->
+                        <div class="col-lg-6">
+                            <div class="column-card h-100">
+                                <h2 class="text-center mb-4">Businesses</h2>
+                                <% if (Object.keys(businesses).length> 0) { %>
+                                    <div class="list-group">
+                                        <% Object.values(businesses).forEach(business=> { %>
+                                            <a href="/business/<%= business.slug %>"
+                                                class="list-group-item list-group-item-action" data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                title="Click to view details for <%= business.name %>">
+                                                <span class="fw-medium">
+                                                    <%= business.name %>
+                                                </span>
+                                            </a>
+                                            <% }); %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="alert alert-secondary text-center" role="alert">
+                                            No businesses listed yet.
+                                        </div>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </main> <!-- End Main Content -->
+
+                <%- include('partials/footer') %>
+                    <%- include('partials/scripts') %>
+
+    </body>
+
+</html>
